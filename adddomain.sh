@@ -15,6 +15,9 @@ maildomain="mail.$(cat /etc/mailname)"
 grep -q "^mydestination.*$domain" /etc/postfix/main.cf ||
     sed -i "s/^mydestination.*/&, $domain/" /etc/postfix/main.cf
 
+# Allow user to login to different domains
+echo "/^(.*)@$(sh -c "echo $domain | sed 's/\./\\\./'")$/   \${1}" >> /etc/postfix/login_maps.pcre
+
 # Create DKIM for the new domain
 mkdir -p "/etc/postfix/dkim/$domain"
 opendkim-genkey -D "/etc/postfix/dkim/$domain" -d "$domain" -s "$subdom"
