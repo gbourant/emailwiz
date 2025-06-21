@@ -41,7 +41,7 @@ mxentry="$domain	MX	10	$maildomain	300"
 echo "$dkimentry
 $dmarcentry
 $spfentry
-$mxentry" >> "$HOME/dns_emailwizard_added"
+$mxentry" > "$HOME/$domain.dns_emailwizard_added"
 
 echo "=== ADD THE FOLLOWING TO YOUR DNS TXT RECORDS ==="
 echo "$dkimentry
