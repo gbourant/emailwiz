@@ -32,7 +32,8 @@ certdir="/etc/letsencrypt/live/$maildomain"
 selfsigned="no" # yes no
 allow_suboptimal_ciphers="yes" #yes no
 mailbox_format="maildir" # maildir sdbox
-allowed_protocols=" imap pop3 "  #imap pop3
+#allowed_protocols=" imap pop3 "  #imap pop3
+allowed_protocols=" imap "  #imap
 
 use_cert_config="no"
 country_name="" # IT US UK IN etc etc
@@ -61,7 +62,8 @@ ipv6=$(host "$domain" | grep "IPv6" | awk '{print $NF}')
 [ -z "$ipv6" ] && echo "\033[0;31mPlease point your domain ("$domain") to your server's ipv6 address." && exit 1
 
 # Open required mail ports
-for port in 80 993 465 25 587 110 995; do
+#for port in 80 993 465 25 587 110 995; do
+for port in 80 993 465 25 587; do # removed pop3 ports
 	ufw allow "$port" 2>/dev/null
 done
 
@@ -287,10 +289,10 @@ protocol lmtp {
   mail_plugins = \$mail_plugins sieve
 }
 
-protocol pop3 {
-  pop3_uidl_format = %08Xu%08Xv
-  pop3_no_flag_updates = yes
-}
+#protocol pop3 {
+#  pop3_uidl_format = %08Xu%08Xv
+#  pop3_no_flag_updates = yes
+#}
 
 plugin {
 	sieve = ~/.dovecot.sieve
