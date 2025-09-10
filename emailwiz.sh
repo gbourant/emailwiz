@@ -181,7 +181,7 @@ echo "/^Received:.*/     IGNORE
 
 # Create a login map file that ensures that if a sender wants to send a mail from a user at our local
 # domain, they must be authenticated as that user
-echo "/^(.*)@$(sh -c "echo $domain | sed 's/\./\\\./'")$/   \${1}" > /etc/postfix/login_maps.pcre
+echo "/^(.+)@$(sh -c "echo $domain | sed 's/\./\\\./'")$/   \${1}" > /etc/postfix/login_maps.pcre
 
 # master.cf
 echo "Configuring Postfix's master.cf..."
